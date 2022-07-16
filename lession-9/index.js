@@ -15,19 +15,15 @@ const lib = require('./lib/data');
 const app = {};
 
 // @TODO: todo
-// lib.update('test', 'newFile', {'name': 'England'}, (err) => {
+// lib.delete('test', 'newFile', (err) => {
 //     console.log(err);
 // })
-lib.delete('test', 'newFile', (err) => {
-    console.log(err);
-})
 
 // create a server
 app.createServer = () => {
     const server = http.createServer(app.handleReqRes);
 
     server.listen(environment.port, () => {
-        console.log(environment.envName);
         console.log(`Listening to port ${environment.port}`);
     })
 }

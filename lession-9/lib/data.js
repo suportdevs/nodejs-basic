@@ -18,7 +18,7 @@ const basedir = path.join(__dirname, '../.data/');
 
 // create data 
 lib.create = (dir, file, data, callback) => {
-    fs.open(`${basedir + dir}${file}.json`, 'wx', (err1, fileDescriptor) => {
+    fs.open(`${basedir + dir}/${file}.json`, 'wx', (err1, fileDescriptor) => {
         if(!err1 && fileDescriptor){
             // convert data to srting
             const stringData = JSON.stringify(data);
