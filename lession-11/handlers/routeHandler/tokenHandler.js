@@ -85,4 +85,86 @@ handler._token.get = (requestProperties, callback) => {
     }
 }
 
+handler._token.put = (requestProperties, callback) => {
+    const id = typeof requestProperties.body.id === 'string' && requestProperties.body.id.trim().length > 0 ? requestProperties.body.id : false;
+
+    const extend = typeof requestProperties.body.extend === 'boolean' && requestProperties.body.extend === true ? true : false;
+
+    if(id && extend){
+        data.read('tokens', id, (err, token) => {
+            let tokenData = parseJSON(token);
+            if(tokenData.expires > Date.now()){
+                tokenData.expires = Date.now() * 60 * 60 * 1000;
+
+                data.update('tokens', id, tokenData, (err2) => {
+                    if(!err2){
+                        callback(200, tokenData);
+                    } else {
+                        callback(500, {
+                            'error': 'There was a server side error!'
+                        })
+                    }
+                })
+
+            } else {
+                callback(400, {
+                    'error': 'Token already expires!'
+                })
+            }
+        })
+    } else {
+        callback(400, {
+            'error': 'There was a problem in your request!'
+        })
+    }
+}
+
+handler._token.delete = (requestProperties, callback) => {
+    const id  = typeof requestProperties.queryStringObject.id === 'string' && requestProperties.queryStringObject.id.trim().length > 0 ? requestProperties.queryStringObject.id : false;
+
+    if(id){
+        // lookup the token
+        data.read('tokens', id, (err1, token) => {
+            if(!err1 && token){
+                data.delete('tokens', id, (err2) => {
+                    if(!err2){
+                        callback(200, {
+                            'message': 'Token deleted successfully.'
+                        })
+                    } else {
+                        callback(500, {
+                            'error': 'There was a server side error!'
+                        })
+                    }
+                })
+            } else {
+                callback(500, {
+                    'error': 'There was a server side error!'
+                })
+            }
+        })
+    } else {
+        callback(400, {
+            'error': 'There was a problem in your request!'
+        })
+    }
+}
+
+handler._token.verify = (id, phone, callback) => {
+    data.read('tokens', id, (err, token) => {
+        const tokendata = parseJSON(token);
+        console.log(tokendata)
+        if(!err && token){
+            if((tokendata.phone === phone) && (tokendata.expires > Date.now())){
+                callback(true);
+            } else {
+                callback(false);
+            }
+        } else {
+            console.log(err)
+            callback(false);
+        }
+    })
+}
+
 module.exports = handler;

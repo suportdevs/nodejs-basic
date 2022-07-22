@@ -6,7 +6,7 @@
 */
 // dependencies
 const {sampleHandler} = require('../handlers/sampleHandler/sampleHandler');
-const {userHandler} = require('../handlers/userHandler');
+const {userHandler} = require('../handlers/routeHandler/userHandler');
 const {tokenHandler} = require('../handlers/routeHandler/tokenHandler');
 
 // module scafolding

@@ -13,10 +13,6 @@ const environment = require('./helpers/environments');
 // app object - module scafolding
 const app = {};
 
-// @TODO: todo
-// lib.delete('test', 'newFile', (err) => {
-//     console.log(err);
-// })
 
 // create a server
 app.createServer = () => {
