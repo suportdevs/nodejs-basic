@@ -1,0 +1,21 @@
+/*
+* Title: Register Routes
+* Description: Register all routes
+* Author: Mamunur Rashid
+* Date: 12/07/2022
+*/
+// dependencies
+const {sampleHandler} = require('../handlers/sampleHandler/sampleHandler');
+const {userHandler} = require('../handlers/routeHandler/userHandler');
+const {tokenHandler} = require('../handlers/routeHandler/tokenHandler');
+const {checkHandler} = require('../handlers/routeHandler/checkHandler');
+
+// module scafolding
+const routes = {
+    sample: sampleHandler,
+    users: userHandler,
+    token: tokenHandler,
+    check: checkHandler,
+};
+
+module.exports = routes;
